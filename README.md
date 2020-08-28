@@ -1,2 +1,2 @@
-# TCC-FrameData
-MEAN Stack for a Web-Based platform for managing Frame Data of Fighiting Games in general
+# TCC
+Files for studying M.E.R.N. stack
