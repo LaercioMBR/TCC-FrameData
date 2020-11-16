@@ -1,0 +1,144 @@
+const db = require('../db')
+const Game = require('../models/game-models')
+
+createGame = (req, res) => {
+    const body = req.body;
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a game',
+        })
+    }
+
+    var gameName = req.params.name;
+    console.log("Creating new game in db framedata -> " + gameName + " <- at the time of " + Date().toString());
+
+    db.db.createCollection(gameName);
+
+    return res.status(200).json({
+        success: true,
+        data: req.params,
+    })
+
+}
+
+updateGame = async (req, res) => {
+    const body = req.body
+
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a game to update',
+        })
+    }
+
+    var oldName = req.params.name;
+    var newName = req.params.newname;
+
+    console.log(oldName);
+    console.log(newName);
+
+    db.db.renameCollection(oldName, newName);
+
+    return res.status(200).json({
+        success: true,
+        data: 'Game -> ' + oldName + '<- updated to -> '+newName+ ' <- at the time of ' + Date().toString() ,
+    })
+    /*
+    */
+}
+
+deleteGame = async (req, res) => {
+
+    var gameNameDelete = req.params.name;
+
+    if(gameNameDelete == ''){
+        return res.status(404).json({
+            error,
+            message: 'No game informed to delete!',
+        })
+    }
+
+    db.db.dropCollection(gameNameDelete);
+
+    return res.status(200).json({
+        success: true,
+        data: "The Game -> " +  req.params.name +  " <- was deleted",
+    })
+    
+}
+
+getGamesByName = async (req, res) => {
+
+    db.db.listCollections().toArray(function(err, collections){
+
+        //res.status(200).json(collections.length);
+        var listGames = [];
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!collections.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `No games to get` })
+        }
+
+        //itera pela collections em procura dos jogos que batem com o parametro name.
+        for (var i = 0; i < collections.length; i++) {
+
+            var name = collections[i].name.toUpperCase();
+            var query = req.params.name.toUpperCase();
+
+            if(name.includes( query ) )
+                listGames.push(collections[i].name)
+        }
+        console.log("eu recebi um get com parametro as : " + Date().toString());
+        
+        //se lista estiver vazia, não achou um game com o parametro dado.
+        if(listGames.length == 0)
+            return res.status(200).json({ success: true, data: "No games matched the query" })
+        else
+            return res.status(200).json({ success: true, data: listGames }) 
+    })
+}
+
+getGames = async (req, res) => {
+
+    //https://docs.mongodb.com/manual/reference/command/listCollections/#dbcmd.listCollections
+    //listCollections can accept parameters like  {nameOnly:true} but I can't get it to work on time, so... enjoy this monstrosity
+    db.db.listCollections().toArray(function(err, collections){
+
+        //res.status(200).json(collections.length);
+
+        var listGames = [];
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!collections.length) {
+            return res.status(404).json({ success: false, error: `No games to get` })
+        }
+        
+        for (var i = 0; i < collections.length; i++) {
+
+            listGames.push(collections[i].name)
+            //Do something
+        }
+        console.log("eu recebi um get as : " + Date().toString());
+        
+        //data can be 'listGames' for only the names of the collections or 'collections' for everything 'listCollections()' gives back.
+        return res.status(200).json({ success: true, data: listGames }) 
+    })
+    //.catch(err => console.log(err))
+
+    //this catch is sending some deprecation warnings.
+    
+}
+
+module.exports = {
+    createGame,
+    updateGame,
+    deleteGame,
+    getGames,
+    getGamesByName,
+}

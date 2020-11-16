@@ -13,10 +13,11 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
       this.items = [
-          {label: 'Home', icon: 'pi pi-fw pi-home', routerLink:"/home"},
-          {label: 'Use', icon: 'pi pi-fw pi-play'},
-          {label: 'Contribute', icon: 'pi pi-fw pi-pencil'},
-          {label: 'Manage', icon: 'pi pi-fw pi-cog'} 
+          {label: 'Home', icon: 'pi pi-fw pi-home', routerLink:"/", routerLinkActiveOptions:{exact:true} },
+          {label: 'Use', icon: 'pi pi-fw pi-play', routerLink:"use", routerLinkActiveOptions:{exact:true} },
+          {label: 'Contribute', icon: 'pi pi-fw pi-pencil', routerLink:"contribute", routerLinkActiveOptions:{exact:true} },
+          {label: 'Manage', icon: 'pi pi-fw pi-cog', routerLink:"manage", routerLinkActiveOptions:{exact:true} } 
+
       ];
   }
 }
