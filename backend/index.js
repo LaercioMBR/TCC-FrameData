@@ -6,9 +6,12 @@ const app = express()
 const apiPort = 3000
 const gameRouter = require('./routes/game-router')
 
-app.use(bodyParser.urlencoded({    extended: true }))
-app.use(bodyParser.json())
-app.use(cors())
+const corsOptions = {
+
+};
+app.use(bodyParser.urlencoded({    extended: true }));
+app.use(bodyParser.json());
+app.use(cors(corsOptions));
 
 db.on('error', console.error.bind(console, 'Some shit happened:'))
 

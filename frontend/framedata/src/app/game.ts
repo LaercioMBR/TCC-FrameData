@@ -1,3 +1,4 @@
 export interface Game {
-    name?:string;
+    name:string;
+    moveList:Object;
 }

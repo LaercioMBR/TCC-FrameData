@@ -1,6 +1,7 @@
+//import { HttpClientModule } from '@angular/common/http';
+//import { HttpClient} from '@angular/common/http';
+
 import { Component, OnInit } from '@angular/core';
-//import { game } from '../../domain/game';
-//import { gameService } from '../../service/gameservice';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { Game } from 'src/app/game';
@@ -15,38 +16,39 @@ import { GameService } from 'src/app/gameservice';
 })
 
 //implements OnInit 
-export class ManagementTableComponent {
+export class ManagementTableComponent implements OnInit {
 
     constructor(private GameService: GameService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
     
     gameDialog:boolean;
 
     games: Game[];
-
+    
     game: Game;
-
+    
     selectedGames: Game[];
-
+    
     submitted:boolean;
-
+    
+    
     //GameService: GameService;
-
     
     ngOnInit() {
-
-        console.log("funciona");
-        /*
+        
         console.log("teste antes")
+        this.getGames();
         console.log("teste depois")
         
         /*
         this.getGames();
         then(data => this.games = data);
         */
-       
     }
     
-    
+    getGames2(){
+        console.log("funciona getGame2");
+        this.GameService.getGames2();
+    }
     
     getGames(){
 
@@ -55,16 +57,25 @@ export class ManagementTableComponent {
         var teste = "teste 50" 
         console.log(teste);
         return  teste;
+
         */
-       return this.GameService.getGames()
+        var teste;
+        
+        this.GameService.getGames().subscribe( (data) => {
+            console.log(data);
+        });  
+
         //console.log("depois do service")
     }
 
+/*
     openNew() {
         this.game = {};
         this.submitted = false;
         this.gameDialog = true;
     }
+
+*/
   /*
   gameDialog: boolean;
 

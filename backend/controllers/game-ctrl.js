@@ -112,10 +112,12 @@ getGames = async (req, res) => {
 
         var listGames = [];
         if (err) {
+            console.log("eu recebi um get e tive um erro : " + Date().toString());
             return res.status(400).json({ success: false, error: err })
         }
 
         if (!collections.length) {
+            console.log("eu recebi um get e tive um erro : " + Date().toString());
             return res.status(404).json({ success: false, error: `No games to get` })
         }
         
