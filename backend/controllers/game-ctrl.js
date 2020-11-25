@@ -13,16 +13,29 @@ createGame = (req, res) => {
     var gameName = req.params.name;
     console.log("Creating new game in db framedata -> " + gameName + " <- at the time of " + Date().toString());
 
-    db.db.createCollection(gameName);
+    db.db.createCollection(gameName,function(err){
+        if(err){
+            console.log(err)
+            return res.status(200).json({
+                success: false,
+                error: 'There already exists a game with that Name || Error-Code: ' + err.codeName,
+            })
 
-    return res.status(200).json({
-        success: true,
-        data: req.params,
-    })
+        }
+        else{
+            return res.status(200).json({
+                success: true,
+                message: 'Game ' + gameName + ' successfully added to the database',
+            })
+
+        }
+
+    }); 
 
 }
 
 updateGame = async (req, res) => {
+    console.log("Eu recebi um put as : " + Date().toString() );
     const body = req.body
 
     if (!body) {
@@ -37,8 +50,9 @@ updateGame = async (req, res) => {
 
     console.log(oldName);
     console.log(newName);
-
+    console.log("Game -> " + oldName + "<- updated to -> "+newName+ " <- at the time of " + Date().toString() );
     db.db.renameCollection(oldName, newName);
+
 
     return res.status(200).json({
         success: true,
@@ -106,7 +120,7 @@ getGames = async (req, res) => {
 
     //https://docs.mongodb.com/manual/reference/command/listCollections/#dbcmd.listCollections
     //listCollections can accept parameters like  {nameOnly:true} but I can't get it to work on time, so... enjoy this monstrosity
-    db.db.listCollections().toArray(function(err, collections){
+    db.db.listCollections(filter= {}, options = {nameOnly:true}) .toArray(function(err, collections){
 
         //res.status(200).json(collections.length);
 
@@ -129,7 +143,7 @@ getGames = async (req, res) => {
         console.log("eu recebi um get as : " + Date().toString());
         
         //data can be 'listGames' for only the names of the collections or 'collections' for everything 'listCollections()' gives back.
-        return res.status(200).json({ success: true, data: listGames }) 
+        return res.status(200).json({ success: true, data: collections });
     })
     //.catch(err => console.log(err))
 

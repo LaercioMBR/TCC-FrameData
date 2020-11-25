@@ -8,13 +8,13 @@ import { retry, catchError, take } from 'rxjs/operators';
 import { Game } from './game';
 
 @Injectable()
-export class GameService {
+export class DataService {
   
   constructor(private http: HttpClient) {
     
   }
   
-  private urlApi = 'http://localhost:3000/api/games/';
+  private urlApi = 'http://localhost:3000/api/data/';
   
   handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
@@ -29,8 +29,11 @@ export class GameService {
     return throwError(errorMessage);
   }
   
-  getGames():Observable<any>{
-    let resposta = this.http.get<any>(this.urlApi).pipe(retry(3),catchError(this.handleError));
+  getSchema(gameName):Observable<any>{
+    let urlGetSchema = this.urlApi + gameName + '/Data-Schema'
+    console.log(urlGetSchema);
+    console.log("dentro de getSchema no dataservice")
+    let resposta = this.http.get<any>(urlGetSchema).pipe(retry(3),catchError(this.handleError));
     return resposta;
   }
 

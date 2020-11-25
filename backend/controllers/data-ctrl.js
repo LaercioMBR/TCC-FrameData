@@ -109,8 +109,10 @@ getDataByName = async (req, res) => {
 
 
 getData = async (req, res) => {
-    
-    db.db.collection(req.params.gameName).find({}).toArray(function(err, docs){
+    //Excludes the document which holds the Data-Schema for the game from the ''GET ALL''.
+
+    console.log("DEntro de getData");
+    db.db.collection(req.params.gameName).find({name: {$ne:'Data-Schema'}}).toArray(function(err, docs){
     
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -128,11 +130,12 @@ getData = async (req, res) => {
     })
  
 }
+
  
 module.exports = {
     createData,
     updateData,
-    deleteData,
+    deleteData, 
     getData,
     getDataByName,
 }

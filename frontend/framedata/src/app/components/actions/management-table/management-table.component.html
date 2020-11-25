@@ -1,28 +1,14 @@
-<!-- 
 <p-toast>
 </p-toast>
 
-<p>{{ getGames2() }} </p>
--->
-
-<p>teste 3 +1</p>
-<p>teste 5</p>
-
-<!-- 
 <div class="card">
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left">
             <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
-            <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedGames()" [disabled]="!selectedGames || !selectedGames.length"></button>
-        </ng-template>
-
-        <ng-template pTemplate="right">
-            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="p-mr-2 p-d-inline-block"></p-fileUpload>
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
         </ng-template>
     </p-toolbar>
 
-    <p-table #dt [value]="games" [rows]="100" [globalFilterFields]="['name']" [(selection)]="selectedGames" [rowHover]="true" dataKey="id">
+    <p-table #dt [value]="games" [rows]="100" [globalFilterFields]="['name']" [(selection)]="selectedGames" dataKey="id">
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-ai-center p-jc-between">
                 <h5 class="p-m-0">Manage Frame Data Tables</h5>
@@ -34,19 +20,11 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th style="width: 3rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <th pSortableColumn="name">Series <p-sortIcon field="name"></p-sortIcon></th>
-                <!-- <th pSortableColumn="price">Table Completition <p-sortIcon field="price"></p-sortIcon></th> 
+                <th pSortableColumn="name">Fighting Games<p-sortIcon field="name"></p-sortIcon></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-game>
             <tr>
-                <td>
-                    <p-tableCheckbox [value]="game"></p-tableCheckbox>
-                </td>
-                <!-- <td><img [src]="'assets/showcase/images/demo/game/' + game.image" [alt]="game.name" width="100" class="p-shadow-4" /></td> 
                 <td>{{game.name}}</td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editGame(game)"></button>
@@ -62,22 +40,28 @@
     </p-table>
 </div>
 
-<p-dialog [(visible)]="gameDialog" [style]="{width: '450px'}" header="game Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="gameDialog" [style]="{width: '450px'}" header="Game Details" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
-        <img [src]="'assets/showcase/images/demo/game/' + game.image" [alt]="game.image" class="game-image" *ngIf="game.image">
         <div class="p-field">
             <label for="name">Name</label>
             <input type="text" pInputText id="name" [(ngModel)]="game.name" required autofocus />
             <small class="p-invalid" *ngIf="submitted && !game.name">Name is required.</small>
+            <button pButton pRipple label="Manage this Game's Frame Data" icon="pi pi-sliders-v" class="p-button-text" (click)="manageGame(game)"></button>    
         </div>
         
-        <div class="p-field">
-            <label for="description">Description</label>
-            <textarea id="description" pInputTextarea [(ngModel)]="game.description" required rows="3" cols="20"></textarea>
-        </div>
-
-        <!-- 
-        <div class="p-field">
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveGame(game.name)"></button>
+    </ng-template>
+</p-dialog>
+<!-- 
+    <div class="p-field">
+        <label for="description">Description</label>
+        <textarea id="description" pInputTextarea [(ngModel)]="game.description" required rows="3" cols="20"></textarea>
+    </div>
+    
+    <div class="p-field">
             <label class="p-mb-3">Category</label>
             <div class="p-formgrid p-grid">
                 <div class="p-field-radiobutton p-col-6">
@@ -112,16 +96,8 @@
                 <p-inputNumber id="quantity" [(ngModel)]="game.quantity"></p-inputNumber>
             </div>
         </div>
-
+        -->
         
-    </ng-template>
     
-    <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveGame()"></button>
-    </ng-template>
-</p-dialog>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
-
--->

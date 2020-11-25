@@ -4,7 +4,9 @@ const cors = require('cors')
 const db = require('./db')
 const app = express()
 const apiPort = 3000
-const gameRouter = require('./routes/game-router')
+const gameRouter = require('./routes/game-router');
+const dataRouter = require('./routes/data-router');
+const schemaRouter = require('./routes/schema-router');
 
 const corsOptions = {
 
@@ -23,6 +25,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api', gameRouter)
+app.use('/api', dataRouter)
+app.use('/api', schemaRouter)
 
 app.listen(apiPort, () => {
     console.log(`Servidor provavelmente rodando na porta ${apiPort}`)

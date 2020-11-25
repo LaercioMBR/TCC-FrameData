@@ -18,8 +18,10 @@ import {InputTextModule} from 'primeng/inputtext';
 
 import {FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { CommonModule } from "@angular/common";
 import { GameService } from './gameservice';
+import { DataService } from './dataservice';
+import {SchemaService } from './schemaservice';
 
 import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
@@ -50,7 +52,7 @@ import { ContentComponent } from './components/template/content/content.componen
 import { ContributeComponent } from './components/views/contribute/contribute.component';
 import { UseComponent} from './components/views/use/use.component';
 import { ManagementTableComponent } from './components/actions/management-table/management-table.component';
-
+import { ManageGameComponent } from './components/actions/manage-game/manage-game.component';
 
 @NgModule({
   imports: [
@@ -59,6 +61,7 @@ import { ManagementTableComponent } from './components/actions/management-table/
     MessageModule,
     SidebarModule,
     ButtonModule,
+    CommonModule,
     MenuModule,
     ToolbarModule,
     InputTextModule,
@@ -90,10 +93,11 @@ import { ManagementTableComponent } from './components/actions/management-table/
 /*
 */
     RouterModule.forRoot([
-        { path:'', component: HomeComponent },
+        { path: '' , component: HomeComponent },
         { path: 'manage', component:ManageComponent },
         { path: 'contribute', component:ContributeComponent },
         { path: 'use', component:UseComponent },
+        { path: 'manage/:game' , component:ManageGameComponent}
     ])
     /*
     */
@@ -110,10 +114,11 @@ import { ManagementTableComponent } from './components/actions/management-table/
     ContentComponent,
     UseComponent,
     ContributeComponent,
+    ManageGameComponent,
     ManagementTableComponent,
   ],
   bootstrap:    [ AppComponent ],
-  providers: [ GameService, MessageService, ConfirmationService]
+  providers: [ GameService, MessageService, ConfirmationService, DataService, SchemaService]
 })
 
 export class AppModule { }

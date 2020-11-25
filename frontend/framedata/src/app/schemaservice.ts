@@ -8,13 +8,13 @@ import { retry, catchError, take } from 'rxjs/operators';
 import { Game } from './game';
 
 @Injectable()
-export class GameService {
+export class SchemaService {
   
   constructor(private http: HttpClient) {
     
   }
   
-  private urlApi = 'http://localhost:3000/api/games/';
+  private urlApi = 'http://localhost:3000/api/schema/';
   
   handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
@@ -29,40 +29,15 @@ export class GameService {
     return throwError(errorMessage);
   }
   
-  getGames():Observable<any>{
-    let resposta = this.http.get<any>(this.urlApi).pipe(retry(3),catchError(this.handleError));
+  getSchema(gameName):Observable<any>{
+    let urlGetSchema = this.urlApi + gameName;
+    console.log(urlGetSchema);
+    console.log("dentro de getSchema no schemaservice")
+    let resposta = this.http.get<any>(urlGetSchema).pipe(retry(3),catchError(this.handleError));
     return resposta;
   }
-
-  putGame(gameName, gameNameNew):Observable<any>{
-    //  let options = "param:{ name: " + gameName+ ",newname:" + gameNameNew " }";
-    console.log(gameNameNew +" <= NOVO || VELHO => "+ gameName + " Dentro do gameservice.putgame ");
-
-    const params = { params : new HttpParams().set('name', gameName).set('newname',gameNameNew) };
-    const urlPut = this.urlApi + gameName+'/'+gameNameNew;
-    console.log(urlPut);
-
-    let resposta = this.http.put(urlPut,{"mensagem":"temporaria"});
-    return resposta;
-  }
-
-  deleteGame(gameName):Observable<any>{
-    console.log("Dentro do serviço deleteGame" + gameName);
-    const urlDelete = this.urlApi + gameName  ;
-    let resposta = this.http.delete<any>(urlDelete).pipe(retry(3),catchError(this.handleError));
-
-    return resposta ;
-
-  }
-
-  postGame(gameName):Observable<any>{
-    console.log("Dentro do serviço postGame gameName => " + gameName);
-    const urlPost = this.urlApi+gameName;
-    let resposta = this.http.post<any>(urlPost,{"mensagem":"temporaria"}).pipe(retry(3),catchError(this.handleError));
- 
-    return resposta;
-  }
-        /*
+}
+  /*
         .pipe(retry(3),catchError(this.handleError));
 
         .toPromise()
@@ -84,5 +59,3 @@ export class GameService {
 
         .pipe(retry(3),catchError(this.handleError))
         */
-    
-}
