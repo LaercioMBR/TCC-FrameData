@@ -8,20 +8,18 @@ const gameRouter = require('./routes/game-router');
 const dataRouter = require('./routes/data-router');
 const schemaRouter = require('./routes/schema-router');
 
-const corsOptions = {
+const corsOptions = {};
 
-};
 app.use(bodyParser.urlencoded({    extended: true }));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
-db.on('error', console.error.bind(console, 'Some shit happened:'))
+db.on('error', console.error.bind(console, 'Something happened on the database:') )
 
-var teste = 1;
+var test = 1;
 app.get('/', (req, res) => {
-
-    teste += 1;
-    res.send('Teste dois' + teste)
+    test += 1;
+    res.send('Test message' + test)
 })
 
 app.use('/api', gameRouter)

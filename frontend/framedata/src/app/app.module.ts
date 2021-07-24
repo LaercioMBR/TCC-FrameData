@@ -103,7 +103,6 @@ import { ManageGameComponent } from './components/actions/manage-game/manage-gam
     */
   ],
 
-
   declarations: [ 
     AppComponent, 
     NavComponent,

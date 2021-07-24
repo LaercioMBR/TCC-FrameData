@@ -53,12 +53,12 @@ export class ManagementTableComponent implements OnInit {
             this.games = data.data;
         });
 
-        console.log("teste depois")
+    }
+    
+    getGames(){
         
-        /*
-        this.getGames();
-        then(data => this.games = data);
-        */
+        return this.GameService.getGames().toPromise();
+        
     }
 
     manageGame(game:Game){
@@ -69,11 +69,6 @@ export class ManagementTableComponent implements OnInit {
         this.router.navigate([routeUrl]);
     }
     
-    getGames(){
-        
-        return this.GameService.getGames().toPromise();
-        
-    }
     
     editGame(game: Game) {
         this.game = {...game};

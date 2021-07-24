@@ -10,5 +10,4 @@ router.post('/data/:gameName/:characterName', dataCtrl.createData)
 router.put('/data/:gameName/:characterName', dataCtrl.updateData)
 router.delete('/data/:gameName/:characterName', dataCtrl.deleteData)
 
-
 module.exports = router

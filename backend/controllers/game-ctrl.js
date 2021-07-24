@@ -119,19 +119,18 @@ getGamesByName = async (req, res) => {
 getGames = async (req, res) => {
 
     //https://docs.mongodb.com/manual/reference/command/listCollections/#dbcmd.listCollections
-    //listCollections can accept parameters like  {nameOnly:true} but I can't get it to work on time, so... enjoy this monstrosity
     db.db.listCollections(filter= {}, options = {nameOnly:true}) .toArray(function(err, collections){
 
         //res.status(200).json(collections.length);
 
         var listGames = [];
         if (err) {
-            console.log("eu recebi um get e tive um erro : " + Date().toString());
+            console.log("I received an get and had an error : " + Date().toString());
             return res.status(400).json({ success: false, error: err })
         }
 
         if (!collections.length) {
-            console.log("eu recebi um get e tive um erro : " + Date().toString());
+            console.log("I received an get and had an error : " + Date().toString());
             return res.status(404).json({ success: false, error: `No games to get` })
         }
         
@@ -140,15 +139,13 @@ getGames = async (req, res) => {
             listGames.push(collections[i].name)
             //Do something
         }
-        console.log("eu recebi um get as : " + Date().toString());
+        console.log("I received an get at : " + Date().toString());
         
         //data can be 'listGames' for only the names of the collections or 'collections' for everything 'listCollections()' gives back.
         return res.status(200).json({ success: true, data: collections });
     })
     //.catch(err => console.log(err))
-
-    //this catch is sending some deprecation warnings.
-    
+    //this catch is sending some deprecation warnings so I commented it.
 }
 
 module.exports = {

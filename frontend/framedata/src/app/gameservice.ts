@@ -10,9 +10,7 @@ import { Game } from './game';
 @Injectable()
 export class GameService {
   
-  constructor(private http: HttpClient) {
-    
-  }
+  constructor(private http: HttpClient) {  };
   
   private urlApi = 'http://localhost:3000/api/games/';
   
